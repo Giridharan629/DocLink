@@ -26,15 +26,21 @@ const Appoinment = () => {
     // getting Curr Date
     let today = new Date();
 
-    for(let i = 0; i<7; i++){
+    // setting end date for time comparision date will get incremented within the loop
+    let endTime = new Date();
+    endTime.setHours(21);
+
+    let iEnd = 7
+    if(today.getHours() > endTime.getHours()){
+      iEnd++;
+    }
+
+    for(let i = 0; i<iEnd; i++){
       // getting date with index
       let currDate = new Date(today);
       currDate.setDate(today.getDate() + i);
 
-      // setting end time of the date with index
-      let endTime = new Date();
       endTime.setDate(today.getDate() + i);
-      endTime.setHours(21,0,0,0);
 
       // setting hours
       if(today.getDate() === currDate.getDate()){
@@ -42,8 +48,8 @@ const Appoinment = () => {
         currDate.setMinutes( currDate.getHours() > 10 && currDate.getMinutes() > 30 ? 30 : 0)
       }
       else{
-        currDate.setHours(10,0,0,0);
-        currDate.setMinutes(0,0,0);
+        currDate.setHours(10);
+        currDate.setMinutes(0);
       }
 
 
@@ -63,7 +69,7 @@ const Appoinment = () => {
         currDate.setMinutes(currDate.getMinutes() + 30);
       }
 
-      setDocSlot (prev => ([...prev, timeSlots]))
+      if(timeSlots.length > 0) setDocSlot (prev => ([...prev, timeSlots]));
 
     }
   }

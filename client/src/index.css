@@ -18,7 +18,9 @@
     font-family: "Outfit", sans-serif;
 }
 
-
+button{
+    @apply cursor-pointer
+}
 
 .active hr{
     @apply block;
@@ -26,4 +28,10 @@
 
 ::-webkit-scrollbar{
     @apply hidden
+}
+
+@media (max-width : 740px){
+    .active p{
+        @apply text-white bg-primary
+    }
 }
