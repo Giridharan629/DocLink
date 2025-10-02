@@ -37,14 +37,15 @@ const Appoinment = () => {
       endTime.setHours(21,0,0,0);
 
       // setting hours
-      if(today.getDate === currDate.getDate){
+      if(today.getDate() === currDate.getDate()){
         currDate.setHours(currDate.getHours() > 10 ? currDate.getHours() + 1 : 10);
         currDate.setMinutes( currDate.getHours() > 10 && currDate.getMinutes() > 30 ? 30 : 0)
       }
       else{
-        currDate.setHours(10);
-        currDate.setMinutes(0);
+        currDate.setHours(10,0,0,0);
+        currDate.setMinutes(0,0,0);
       }
+
 
       let timeSlots = []
 
