@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import {v2 as cloudinary} from 'cloudinary'
 import { json } from 'express';
 import doctorModel from '../models/doctorModel.js';
+import jwt from 'jsonwebtoken'
 
 // api for adding doctor
 const addDoctor = async (req, res)=>{
@@ -10,6 +11,12 @@ const addDoctor = async (req, res)=>{
         
         const {name, email, password, speciality, degree, experience, about, fee, address} = req.body;
         const imageFile = req.file
+
+        const existingUser = await doctorModel.findOne({email});
+
+        if(existingUser){
+            return res.json({success:false, message:"Email already registered"})
+        }
 
         if(!name, !email, !password, !speciality, !degree, !experience, !about, !fee, !address){
             return res.json({success:false, message:"Missing details"})
@@ -54,8 +61,37 @@ const addDoctor = async (req, res)=>{
 
     } catch (error) {
         console.log(error.message)
-        res.json({success:false, message:error.message})
+        res.json({success:false, message:error.message + " FROM ADD DOCTOR IN ADMIN COMTROLLER "})
     }
 }
 
-export {addDoctor}
+// API FOR ADMIN LOGIN 
+const loginAdmin = async (req, res)=>{
+
+    
+    try {
+        
+        const {email,password} = req.body;
+        
+        if( email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD ){
+            console.log(email, password)
+
+            const token = jwt.sign(email+password, process.env.JWT_SECRET)
+            return res.json({success:true, token:token})
+
+        }
+        else{
+            return res.json({success : false, message : "Invalid Admin Credencials"})
+        }
+        
+        // return res.json({success : true, message : "login Successful"})
+
+        
+    } catch (error) {
+
+        return res.json({success : false, message : error.message})
+        
+    }
+}
+
+export {addDoctor, loginAdmin}

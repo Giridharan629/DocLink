@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme{
+  --color-primary: #0CA6A3;
+}
+
+::-webkit-scrollbar{
+  @apply hidden
+}
+
+button{
+  @apply cursor-pointer
+}
+
+input, select, textarea {
+  @apply border-[#DADADA]
+}
