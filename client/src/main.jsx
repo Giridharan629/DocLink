@@ -5,10 +5,13 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import AppContextProvider from "./context/context.jsx";
 
+import { ToastContainer } from 'react-toastify';
+
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <AppContextProvider>
       <App />
+      <ToastContainer />
     </AppContextProvider>
   </BrowserRouter>
 );
